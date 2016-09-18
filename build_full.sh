@@ -6,6 +6,11 @@
 command -v ffmpeg >/dev/null 2>&1 || { echo -e "\e[1;31mFFMpeg is not installed or it is not added to your PATH."; echo -e "Install FFMpeg or add it to your PATH, then rerun this script.\e[0m"; exit 1; }
 command -v jpegtran >/dev/null 2>&1 || { echo -e "\e[1;33mjpegtran is not installed or it is not added to your PATH."; echo "jpegtran is required for video compression."; echo "jpegtran is in the libjpeg-turbo package on most systems."; echo -e "If it is not, you can get it from here and compile it yourself: http://jpegclub.org/jpegtran/ . \e[0m";}
 command -v bannertool >/dev/null 2>&1 || { echo -e "\e[1;31mBannertool is not installed or it is not added to your PATH."; echo "Bannertool is required for VCC."; echo "Bannertool is installed with DevKitPro."; echo -e "To install DevKitPro, please follow the instructions at: http://wiki.gbatemp.net/wiki/3DS_Homebrew_Development#Linux_.2F_Mac_OSX \e[0m";}
+command -v 3dstool >/dev/null 2>&1 || { echo -e "\e[1;313dstool is not installed or it is not added to your PATH."; echo "3dstool is required for VCC."; echo -e "Install 3dstool or add it to your PATH, then rerun this script. 3dstool can be obtained from here: https://github.com/dnasdw/3dstool\e[0m"; exit 1; }
+echo "Command line appears to be correct. Continuing."
+
+# Get previous UniqueID - Note, this is currently stored in a serparate file, cuz I'm lazy.
+initialuniqueid=$(cat "linuxstuffs/uniq")
 # Convert a 3D video?
 read -rp "Convert a 3D video? (1 = Yes, 2 = No) " threedeevid
 
@@ -24,7 +29,7 @@ esac
 read -rp "Insert video framerate: " framerate
 read -rp "Insert video quality (From 1 to 32, lower = better quality, higher = better filesize): " quality
 read -rp "Do you want to apply extra compression (slow process and slight filesize reducing)? (1 = Yes, 2 = No): " compression
-read -rp "Insert cia Unique ID [0-9, A-F] (Example: AAAAAA): " uniqueid
+read -rp "Insert cia Unique ID [0-9, A-F] (Example: 0xAAAAAA): " uniqueid
 read -rp "Insert banner image (Example: banner.jpg): " ciabanner
 read -rp "Insert banner audio: (Example: audio.wav): " ciaudio
 read -rp "Insert icon image: (Example: icon.png): " cicon
@@ -130,3 +135,32 @@ if [ $? != 0 ];then
 	mv romfs/video.jpgv saved.jpgv
 	exit 1
 fi 
+
+# We start by generating the romfs for usage in makerom
+echo "Creating romfs file..."
+3dstool -cvtf romfs tmp/romfs.bin --romfs-dir romfs
+if [ $? != 0 ];then 
+	echo "An error occured in bannertool, conversion aborted."
+	echo "The JPGV file has been backupped as saved.jpgv, use the build_jpgv.bat script to use this file instead of re-creating it."
+	mv romfs/video.jpgv saved.jpgv
+	exit 1
+fi 
+
+# Now we make a cia out of it
+sed -i "s/$initialuniqueid/$uniqueid/g" "linuxstuffs/cia_workaround.rsf"
+echo "$uniqueid" > "linuxstuffs/uniq"
+echo "Generating CIA..."
+makerom -f cia -o my_video.cia -elf "linuxstuffs/lpp-3ds.elf" -rsf "linuxstuffs/cia_workaround.rsf" -icon "tmp/icon.bin" -banner "tmp/banner.bin" -exefslogo -target t -romfs "tmp/romfs.bin"
+if [ $? != 0 ];then 
+	echo "An error occured in makerom, conversion aborted."
+	echo "The JPGV file has been backupped as saved.jpgv, use the build_jpgv.bat script to use this file instead of re-creating it."
+	mv romfs/video.jpgv saved.jpgv
+	exit 1
+fi 
+
+# Removing temporary files
+echo "Removing temporary files..."
+rm -rf "tmp/*"
+rm -rf "romfs/video.jpgv"
+echo "Video converted succesfully!"
+exit 0
