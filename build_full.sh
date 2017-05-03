@@ -8,7 +8,7 @@ cat <<EOF
 
 Can also be called without arguments. Script will go interactive for any missing arguments. All arguments are optional.
 
-Run man ./docs/manpage for individual option coverage.
+Run man ./docs/manpage or $(basename $0) -h for individual option coverage.
 
 EOF
 }
