@@ -4,7 +4,7 @@
 function usage() {
 # shellcheck disable=SC2086
 cat <<EOF
-	Usage: $(basename $0) [-cf] [-d [FILE]| -t [-l FILE [-r FILE]]] [-u UNIQUEID] [-n TITLE] [-i BANNER] [-c ICON] [-a AUDIO] [-u AUTHOR] [-q QUALITY]  [-f FPS] [-h]
+	Usage: $(basename $0) [-cf] [-d [FILE]| -t [-l FILE [-r FILE]]] [-u UNIQUEID] [-n TITLE] [-b BANNER] [-i ICON] [-a AUDIO] [-u AUTHOR] [-q QUALITY] [-f FRAMERATE] [-h]
 
 Can also be called without arguments. Script will go interactive for any missing arguments. All arguments are optional.
 
@@ -12,6 +12,58 @@ Run man ./docs/manpage or $(basename $0) -h for individual option coverage.
 
 EOF
 }
+
+#getopts parsing
+while getopts ":cfhd:tl:r:u:n:b:i:a:q:f:" opt; do
+	case $opt in
+	c)
+		COMPRESSION=1
+		;;
+	f)
+		FORCED=1
+		;;
+	h)
+		man './docs/manpage'
+		;;
+	d)
+		VIDFILESET=1
+		threedeevid=2
+		videoname=$OPTARG
+		;;
+	t)
+		VIDFILESET=1
+		threedeevid=1
+		;;
+	l)
+		threedeeleft=$OPTARG
+		;;
+	r)
+		threedeeright=$OPTARG
+		;;
+	u)
+		UNIQUEID=$OPTARG
+		;;
+	n)
+		videotitle=$OPTARG
+		;;
+	i)
+		cicon=$OPTARG
+		;;
+	b)
+		ciabanner=$OPTARG
+		;;
+	a)
+		ciaudio=$OPTARG
+		;;
+	q)
+		quality=$OPTARG
+		;;
+	f)
+		framerate=$OPTARG
+		;;
+	esac
+done
+
 # Command line checking. See http://stackoverflow.com/a/677212/4666756 for details.
 command -v ffmpeg >/dev/null 2>&1 || { echo -e "\e[1;31mFFMpeg is not installed or it is not added to your PATH."; echo -e "Install FFMpeg or add it to your PATH, then rerun this script.\e[0m"; exit 1; }
 command -v jpegtran >/dev/null 2>&1 || { echo -e "\e[1;33mjpegtran is not installed or it is not added to your PATH."; echo "jpegtran is required for video compression."; echo "jpegtran is in the libjpeg-turbo-progs package on Ubuntu systems."; echo -e "If it is not, you can get it from here and compile it yourself: http://jpegclub.org/jpegtran/ . \e[0m";}
