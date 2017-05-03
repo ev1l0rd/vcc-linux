@@ -1,14 +1,22 @@
 #!/bin/bash
 # Video Channels Creator - Linux Edition
 # Original version by [Rinnegatamante](http://rinnegatamante.it)
+function usage() {
+cat <<EOF
+	Usage: $(basename $0) [-cf] [-d [FILE]| -t [-l FILE [-r FILE]]] [-u UNIQUEID] [-n TITLE] [-i BANNER] [-c ICON] [-a AUDIO] [-u AUTHOR] [-q QUALITY]  [-f FPS] [-h]
 
+Can also be called without arguments. Script will go interactive for any missing arguments. All arguments are optional.
+
+Run man ./docs/manpage for individual option coverage.
+
+EOF
+}
 # Command line checking. See http://stackoverflow.com/a/677212/4666756 for details.
 command -v ffmpeg >/dev/null 2>&1 || { echo -e "\e[1;31mFFMpeg is not installed or it is not added to your PATH."; echo -e "Install FFMpeg or add it to your PATH, then rerun this script.\e[0m"; exit 1; }
 command -v jpegtran >/dev/null 2>&1 || { echo -e "\e[1;33mjpegtran is not installed or it is not added to your PATH."; echo "jpegtran is required for video compression."; echo "jpegtran is in the libjpeg-turbo-progs package on Ubuntu systems."; echo -e "If it is not, you can get it from here and compile it yourself: http://jpegclub.org/jpegtran/ . \e[0m";}
 command -v bannertool >/dev/null 2>&1 || { echo -e "\e[1;31mBannertool is not installed or it is not added to your PATH."; echo "Bannertool is required for VCC."; echo "Bannertool can be obtained here: https://github.com/Steveice10/bannertool/releases \e[0m";}
 command -v 3dstool >/dev/null 2>&1 || { echo -e "\e[1;313dstool is not installed or it is not added to your PATH."; echo "3dstool is required for VCC."; echo -e "Install 3dstool or add it to your PATH, then rerun this script. 3dstool can be obtained from here: https://github.com/dnasdw/3dstool/releases \e[0m"; exit 1; }
 command -v makerom >/dev/null 2>&1 || { echo -e "\e[1;31makerom is not installed or it is not added to your PATH."; echo "makerom is required for VCC."; echo -e "Install makerom or add it to your PATH, then rerun this script. 3dstool can be obtained from here: https://github.com/profi200/Project_CTR/releases \e[0m"; exit 1; }
-
 
 echo "Command line appears to be correct. Continuing."
 
