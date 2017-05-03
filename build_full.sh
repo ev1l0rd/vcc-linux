@@ -17,7 +17,7 @@ EOF
 while getopts ":cfhd:tl:r:u:n:b:i:a:q:f:" opt; do
 	case $opt in
 	c)
-		COMPRESSION=1
+		compression=1
 		;;
 	f)
 		FORCED=1
@@ -41,7 +41,7 @@ while getopts ":cfhd:tl:r:u:n:b:i:a:q:f:" opt; do
 		threedeeright=$OPTARG
 		;;
 	u)
-		UNIQUEID=$OPTARG
+		uniqueid=$OPTARG
 		;;
 	n)
 		videotitle=$OPTARG
@@ -64,6 +64,7 @@ while getopts ":cfhd:tl:r:u:n:b:i:a:q:f:" opt; do
 	esac
 done
 
+if [ -z "$FORCED" ]; then
 # Command line checking. See http://stackoverflow.com/a/677212/4666756 for details.
 command -v ffmpeg >/dev/null 2>&1 || { echo -e "\e[1;31mFFMpeg is not installed or it is not added to your PATH."; echo -e "Install FFMpeg or add it to your PATH, then rerun this script.\e[0m"; exit 1; }
 command -v jpegtran >/dev/null 2>&1 || { echo -e "\e[1;33mjpegtran is not installed or it is not added to your PATH."; echo "jpegtran is required for video compression."; echo "jpegtran is in the libjpeg-turbo-progs package on Ubuntu systems."; echo -e "If it is not, you can get it from here and compile it yourself: http://jpegclub.org/jpegtran/ . \e[0m";}
@@ -72,11 +73,16 @@ command -v 3dstool >/dev/null 2>&1 || { echo -e "\e[1;313dstool is not installed
 command -v makerom >/dev/null 2>&1 || { echo -e "\e[1;31makerom is not installed or it is not added to your PATH."; echo "makerom is required for VCC."; echo -e "Install makerom or add it to your PATH, then rerun this script. 3dstool can be obtained from here: https://github.com/profi200/Project_CTR/releases \e[0m"; exit 1; }
 
 echo "Command line appears to be correct. Continuing."
+else
+	echo "Skipping commandline checks."
+fi
 
 # Get previous UniqueID - Note, this is currently stored in a serparate file, cuz I'm lazy.
 initialuniqueid=$(cat "linuxstuffs/uniq")
 # Convert a 3D video?
-read -rp "Convert a 3D video? (1 = Yes, 2 = No) " threedeevid
+
+if [ -z "$VIDFILESET" ]; then
+	read -rp "Convert a 3D video? (1 = Yes, 2 = No) " threedeevid
 
 case $threedeevid in
 	1)
@@ -88,17 +94,64 @@ case $threedeevid in
 	read -rp "Insert video name (Example: video.mp4): " videoname
 	;;
 esac
+else
+	echo "Video Files already set"
+fi
 
 # Asking other questions
-read -rp "Insert video framerate: " framerate
-read -rp "Insert video quality (From 1 to 32, lower = better quality, higher = better filesize): " quality
-read -rp "Do you want to apply extra compression (slow process and slight filesize reducing)? (1 = Yes, 2 = No): " compression
-read -rp "Insert cia Unique ID [0-9, A-F] (Example: 0xAAAAAA): " uniqueid
-read -rp "Insert banner image (Example: banner.jpg): " ciabanner
-read -rp "Insert banner audio: (Example: audio.wav): " ciaudio
-read -rp "Insert icon image: (Example: icon.png): " cicon
-read -rp "Insert video title: " videotitle
-read -rp "Insert video author: " videoauthor
+if [ -z "$framerate" ]; then
+	read -rp "Insert video framerate: " framerate
+else
+	echo "Framerate set to $framerate."
+fi
+
+if [ -z "$quality" ]; then
+	read -rp "Insert video quality (From 1 to 32, lower = better quality, higher = better filesize): " quality
+else
+	echo "Quality set to $quality"
+fi
+
+if [ -z "$compression" ]; then
+	read -rp "Do you want to apply extra compression (slow process and slight filesize reducing)? (1 = Yes, 2 = No): " compression
+else
+	echo "Compression set to true."
+fi
+
+if [ -z "$uniqueid" ]; then
+	read -rp "Insert cia Unique ID [0-9, A-F] (Example: 0xAAAAAA): " uniqueid
+else
+	echo "UniqueID set to $uniqueid."
+fi
+
+if [ -z "$ciabanner" ]; then
+	read -rp "Insert banner image (Example: banner.jpg): " ciabanner
+else
+	echo "Banner image set to $ciabanner"
+fi
+
+if [ -z "$ciaudio" ]; then
+	read -rp "Insert banner audio: (Example: audio.wav): " ciaudio
+else
+	echo "Banner audio set to $ciaudio"
+fi
+
+if [ -z "$cicon" ]; then
+	read -rp "Insert icon image: (Example: icon.png): " cicon
+else
+	echo "Icon image set to $cicon"
+fi
+
+if [ -z "$videotitle" ]; then
+	read -rp "Insert video title: " videotitle
+else
+	echo "Video title set to $videotitle"
+fi
+
+if [ -z "$videoauthor" ]; then
+	read -rp "Insert video author: " videoauthor
+else
+	echo "Video author set to $videoauthor"
+fi
 
 # Converting video to JPGV format
 case $threedeevid in
