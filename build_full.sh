@@ -64,6 +64,17 @@ while getopts ":cfhd:tl:r:u:n:b:i:a:q:f:" opt; do
 	esac
 done
 
+#Thank stackoverflow again. http://stackoverflow.com/a/2210386/4666756
+if [[ $quality =~ ^[0-9]+$ ]]; then
+	echo "Quality is not a positive integer. Exiting"
+	exit 1
+fi
+
+if [[ $framerate =~ ^[0-9]+$ ]]; then
+	echo "Framerate is not a positive integer. Exiting"
+	exit 1
+fi
+
 if [ -z "$FORCED" ]; then
 # Command line checking. See http://stackoverflow.com/a/677212/4666756 for details.
 command -v ffmpeg >/dev/null 2>&1 || { echo -e "\e[1;31mFFMpeg is not installed or it is not added to your PATH."; echo -e "Install FFMpeg or add it to your PATH, then rerun this script.\e[0m"; exit 1; }
@@ -79,8 +90,8 @@ fi
 
 # Get previous UniqueID - Note, this is currently stored in a serparate file, cuz I'm lazy.
 initialuniqueid=$(cat "linuxstuffs/uniq")
-# Convert a 3D video?
 
+# Convert a 3D video?
 if [ -z "$VIDFILESET" ]; then
 	read -rp "Convert a 3D video? (1 = Yes, 2 = No) " threedeevid
 
