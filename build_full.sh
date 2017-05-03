@@ -2,6 +2,7 @@
 # Video Channels Creator - Linux Edition
 # Original version by [Rinnegatamante](http://rinnegatamante.it)
 function usage() {
+# shellcheck disable=SC2086
 cat <<EOF
 	Usage: $(basename $0) [-cf] [-d [FILE]| -t [-l FILE [-r FILE]]] [-u UNIQUEID] [-n TITLE] [-i BANNER] [-c ICON] [-a AUDIO] [-u AUTHOR] [-q QUALITY]  [-f FPS] [-h]
 
