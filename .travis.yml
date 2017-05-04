@@ -17,14 +17,12 @@ before_install:
 
 before_script:
  - wget https://github.com/Steveice10/bannertool/releases/download/1.1.0/bannertool.zip -O /tmp/bannertool.zip
- - unzip /tmp/bannertool.zip "linux-x86_64/bannertool" -d $PWD
+ - unzip /tmp/bannertool.zip "linux-x86_64/bannertool" -d files/
  - wget https://github.com/dnasdw/3dstool/releases/download/v1.0.22/3dstool_linux_x86_64.tar.gz -O /tmp/3dstool.tar.gz
- - tar -zxvf /tmp/3dstool.tar.gz 3dstool -C $PWD
+ - tar -zxvf /tmp/3dstool.tar.gz 3dstool -C files/
  - wget https://github.com/profi200/Project_CTR/releases/download/0.15/makerom_015_ctrtool.zip -O /tmp/makerom.zip
- - unzip /tmp/makerom.zip "Linux_x86_64/makerom" -d $PWD
- - export PATH=$PATH:$PWD/bannertool
- - export PATH=$PATH:$PWD/3dstool
- - export PATH=$PATH:$PWD/makerom
+ - unzip /tmp/makerom.zip "Linux_x86_64/makerom" -d files/
+ - export PATH=$PATH:$PWD/files
 
 script:
  - bash -c 'shellcheck build_full.sh'
