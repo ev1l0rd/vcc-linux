@@ -1,18 +1,32 @@
 language: bash
 
-# Use container-based infrastructure for quicker build start-up
+dist: trusty
 sudo: false
 
 addons:
-  apt:
-    sources:
-    - debian-sid    # Grab shellcheck from the Debian repo (o_O)
-    packages:
-    - shellcheck
+ apt:
+  sources:
+   - trusty-media
+   - debian-sid
+  packages:
+   - ffmpeg
+   - shellcheck
+
+before_install:
+ - ./.travis-libjpeg-setup.sh
+
+before_script:
+ - wget https://github.com/Steveice10/bannertool/releases/download/1.1.0/bannertool.zip -O /tmp/bannertool.zip
+ - unzip /tmp/bannertool.zip "linux-x86_64/bannertool" -d $PWD
+ - wget https://github.com/dnasdw/3dstool/releases/download/v1.0.22/3dstool_linux_x86_64.tar.gz -O /tmp/3dstool.tar.gz
+ - tar -zxvf /tmp/3dstool.tar.gz 3dstool -C $PWD
+ - wget https://github.com/profi200/Project_CTR/releases/download/0.15/makerom_015_ctrtool.zip -O /tmp/makerom.zip
+ - unzip /tmp/makerom.zip "Linux_x86_64/makerom" -d $PWD
+ - export PATH=$PATH:$PWD/bannertool
+ - export PATH=$PATH:$PWD/3dstool
+ - export PATH=$PATH:$PWD/makerom
 
 script:
  - bash -c 'shellcheck build_full.sh'
  - bash -c 'shellcheck linuxstuffs/vid2jpgvsauce/build.sh'
-
-matrix:
-  fast_finish: true
+ - bash -c './test.sh'
