@@ -4,7 +4,7 @@
 function usage() {
 # shellcheck disable=SC2086
 cat <<EOF
-	Usage: $(basename $0) [-cf] [-d [FILE]| -t [-l FILE [-r FILE]]] [-u UNIQUEID] [-n TITLE] [-b BANNER] [-i ICON] [-a AUDIO] [-u AUTHOR] [-q QUALITY] [-f FRAMERATE] [-h]
+	Usage: $(basename $0) [-cf] [-d [FILE]| -t [-l FILE [-r FILE]]] [-u UNIQUEID] [-n TITLE] [-b BANNER] [-i ICON] [-a AUDIO] [-g AUTHOR] [-q QUALITY] [-f FRAMERATE] [-h]
 
 Can also be called without arguments. Script will go interactive for any missing arguments. All arguments are optional.
 
@@ -14,7 +14,7 @@ EOF
 }
 
 #getopts parsing
-while getopts ":cfhd:tl:r:u:n:b:i:a:q:f:" opt; do
+while getopts ":cfhd:tl:r:u:n:b:i:a:q:f:g:" opt; do
 	case $opt in
 	c)
 		compression=1
@@ -60,6 +60,9 @@ while getopts ":cfhd:tl:r:u:n:b:i:a:q:f:" opt; do
 		;;
 	f)
 		framerate=$OPTARG
+		;;
+	g)
+		videoauthor=$OPTARG
 		;;
 	esac
 done
