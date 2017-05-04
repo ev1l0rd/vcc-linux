@@ -185,19 +185,19 @@ fi
 # Converting video to JPGV format
 case $threedeevid in
 	1)
-	ffmpeg -i "./files/$threedeeleft" -r "$framerate" -qscale:v "$quality" -vf "transpose=1" -s 240x400 "temp_left/output%%1d.jpg"
+	ffmpeg -i "./files/$threedeeleft" -r "$framerate" -qscale:v "$quality" -vf "transpose=1" -s 240x400 "temp_left/output%d.jpg"
 	if [ $? != 0 ]; then
 		echo "An error occured in FFMpeg, conversion aborted."
 		exit 1
 	fi 	
-	ffmpeg -i "./files/$threedeeright" -r "$framerate" -qscale:v "$quality" -vf "transpose=1" -s 240x400 "temp_right/output%%1d.jpg"
+	ffmpeg -i "./files/$threedeeright" -r "$framerate" -qscale:v "$quality" -vf "transpose=1" -s 240x400 "temp_right/output%d.jpg"
 	if [ $? != 0 ];then 
 		echo "An error occured in FFMpeg, conversion aborted."
 		exit 1
 	fi 
 	;;
 	2)
-	ffmpeg -i "./files/$videoname" -r "$framerate" -qscale:v "$quality" -vf "transpose=1" -s 240x400 "temp/output%%1d.jpg"
+	ffmpeg -i "./files/$videoname" -r "$framerate" -qscale:v "$quality" -vf "transpose=1" -s 240x400 "temp/output%d.jpg"
 	if [ $? != 0 ]; then
 		echo "An error occured in FFMpeg, conversion aborted."
 		exit 1
