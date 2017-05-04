@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv='content-type' value='text/html;charset=utf8'>
+  <meta name='generator' value='Ronn/v0.7.3 (http://github.com/rtomayko/ronn/tree/0.7.3)'>
+  <title>vcc-linux(1) - Converts videos to JPGV, then packs them up in CIA to be played on the NINTENDO 3DS</title>
+  <style type='text/css' media='all'>
+  /* style: man */
+  body#manpage {margin:0}
+  .mp {max-width:100ex;padding:0 9ex 1ex 4ex}
+  .mp p,.mp pre,.mp ul,.mp ol,.mp dl {margin:0 0 20px 0}
+  .mp h2 {margin:10px 0 0 0}
+  .mp > p,.mp > pre,.mp > ul,.mp > ol,.mp > dl {margin-left:8ex}
+  .mp h3 {margin:0 0 0 4ex}
+  .mp dt {margin:0;clear:left}
+  .mp dt.flush {float:left;width:8ex}
+  .mp dd {margin:0 0 0 9ex}
+  .mp h1,.mp h2,.mp h3,.mp h4 {clear:left}
+  .mp pre {margin-bottom:20px}
+  .mp pre+h2,.mp pre+h3 {margin-top:22px}
+  .mp h2+pre,.mp h3+pre {margin-top:5px}
+  .mp img {display:block;margin:auto}
+  .mp h1.man-title {display:none}
+  .mp,.mp code,.mp pre,.mp tt,.mp kbd,.mp samp,.mp h3,.mp h4 {font-family:monospace;font-size:14px;line-height:1.42857142857143}
+  .mp h2 {font-size:16px;line-height:1.25}
+  .mp h1 {font-size:20px;line-height:2}
+  .mp {text-align:justify;background:#fff}
+  .mp,.mp code,.mp pre,.mp pre code,.mp tt,.mp kbd,.mp samp {color:#131211}
+  .mp h1,.mp h2,.mp h3,.mp h4 {color:#030201}
+  .mp u {text-decoration:underline}
+  .mp code,.mp strong,.mp b {font-weight:bold;color:#131211}
+  .mp em,.mp var {font-style:italic;color:#232221;text-decoration:none}
+  .mp a,.mp a:link,.mp a:hover,.mp a code,.mp a pre,.mp a tt,.mp a kbd,.mp a samp {color:#0000ff}
+  .mp b.man-ref {font-weight:normal;color:#434241}
+  .mp pre {padding:0 4ex}
+  .mp pre code {font-weight:normal;color:#434241}
+  .mp h2+pre,h3+pre {padding-left:0}
+  ol.man-decor,ol.man-decor li {margin:3px 0 10px 0;padding:0;float:left;width:33%;list-style-type:none;text-transform:uppercase;color:#999;letter-spacing:1px}
+  ol.man-decor {width:100%}
+  ol.man-decor li.tl {text-align:left}
+  ol.man-decor li.tc {text-align:center;letter-spacing:4px}
+  ol.man-decor li.tr {text-align:right;float:right}
+  </style>
+  <style type='text/css' media='all'>
+  /* style: toc */
+  .man-navigation {display:block !important;position:fixed;top:0;left:113ex;height:100%;width:100%;padding:48px 0 0 0;border-left:1px solid #dbdbdb;background:#eee}
+  .man-navigation a,.man-navigation a:hover,.man-navigation a:link,.man-navigation a:visited {display:block;margin:0;padding:5px 2px 5px 30px;color:#999;text-decoration:none}
+  .man-navigation a:hover {color:#111;text-decoration:underline}
+  </style>
+</head>
+<!--
+  The following styles are deprecated and will be removed at some point:
+  div#man, div#man ol.man, div#man ol.head, div#man ol.man.
+
+  The .man-page, .man-decor, .man-head, .man-foot, .man-title, and
+  .man-navigation should be used instead.
+-->
+<body id='manpage'>
+  <div class='mp' id='man'>
+
+  <div class='man-navigation' style='display:none'>
+    <a href="#NAME">NAME</a>
+    <a href="#SYNOPSIS">SYNOPSIS</a>
+    <a href="#DESCRIPTION">DESCRIPTION</a>
+    <a href="#OPTIONS">OPTIONS</a>
+    <a href="#AUTHOR">AUTHOR</a>
+    <a href="#COPYRIGHT">COPYRIGHT</a>
+  </div>
+
+  <ol class='man-decor man-head man head'>
+    <li class='tl'>vcc-linux(1)</li>
+    <li class='tc'>VCC-Linux</li>
+    <li class='tr'>vcc-linux(1)</li>
+  </ol>
+
+  <h2 id="NAME">NAME</h2>
+<p class="man-name">
+  <code>vcc-linux</code> - <span class="man-whatis">Converts videos to JPGV, then packs them up in CIA to be played on the NINTENDO 3DS</span>
+</p>
+
+<h2 id="SYNOPSIS">SYNOPSIS</h2>
+
+<p><code>build_full.sh</code> [-cf] [-d [FILE]| -t [-l FILE [-r FILE]]] [-u UNIQUEID] [-n TITLE] [-b BANNER] [-i ICON] [-a AUDIO] [-g AUTHOR] [-q QUALITY] [-p FRAMERATE] [-h]</p>
+
+<h2 id="DESCRIPTION">DESCRIPTION</h2>
+
+<p>Bash script to convert videos to JPGV format. Converted videos are then build in the CIA format, which can be installed on a Nintendo 3DS with the proper CFW or played with citra. Has good error handling and sanity checks. Can be automated with options.</p>
+
+<h2 id="OPTIONS">OPTIONS</h2>
+
+<dl>
+<dt class="flush"><code>-c</code></dt><dd>Adds compression to the video. Requires jpegtran to be installed. If not specified, this will be asked during execution.</dd>
+<dt class="flush"><code>-f</code></dt><dd>Skips command line checking. Generally not recommended.</dd>
+<dt class="flush"><code>-d</code> <var>FILE</var></dt><dd>Mutually exclusive with <code>-t</code>. Specifies a 2D video to be converted.</dd>
+<dt class="flush"><code>-t</code></dt><dd>Mutually exclusive with <code>-d</code>. Tells the script you want to convert a 3D video.</dd>
+<dt class="flush"><code>-l</code> <var>FILE</var></dt><dd>Requires <code>-r</code> and <code>-t</code> to also be specified. The left video of a 3D video.</dd>
+<dt class="flush"><code>-r</code> <var>FILE</var></dt><dd>Requires <code>-l</code> and <code>-t</code> to also be specified. The right video of a 3D video.</dd>
+<dt><code>-u</code> <var>UNIQUEID</var></dt><dd>Specifies the <var>UNIQUEID</var> for the resulting CIA. UNIQUEID must be 8 characters long and is given in this format: <em>0xYYYYYY</em>, where <em>0x</em> is literal and Y can be <em>[0-9, A-F]</em>.</dd>
+<dt><code>-n</code> <var>TITLE</var></dt><dd>Specifies the title for the resulting CIA. The title is used for listing the CIA in the System Settings, as well as visible at the biggest Home Menu zoom.</dd>
+<dt><code>-b</code> <var>BANNER</var></dt><dd>Specifies the banner image. Banner image must be in the PNG format and be 256x128px. The banner is visible when launching the CIA from the Home Menu.</dd>
+<dt class="flush"><code>-i</code> <var>ICON</var></dt><dd>Specifies the icon. The icon must be in the PNG format and be 48x48px. The icon is visible on the Home Menu and in the System Settings.</dd>
+<dt><code>-a</code> <var>AUDIO</var></dt><dd>Specifies the audio file. The audio file must be in the .wav format and can be up to 3 seconds long.</dd>
+<dt><code>-g</code> <var>AUTHOR</var></dt><dd>Specifies the author/publisher. The author/publisher is visible in the System Settings when selecting the installed CIA, as well as visible at the biggest Home Menu zoom.</dd>
+<dt><code>-q</code> <var>QUALITY</var></dt><dd>Specifies the quality of the resulting video. Must be a valid integer between <em>[1-32]</em>.</dd>
+<dt><code>-p</code> <var>FRAMERATE</var></dt><dd>Specifes the amount of frames per second of the resulting video. Must be a valid integer. Too many frames per second will result in duplicate frames and slowdown on the 3DS. Too few frames per second will result in dropped frames, but may work better on older systems. <code>ffmpeg -i</code> can be used on the video file to determine the correct value.</dd>
+<dt class="flush"><code>-h</code></dt><dd>Displays this manual file.</dd>
+</dl>
+
+
+<h2 id="AUTHOR">AUTHOR</h2>
+
+<p>Written by Valentijn "ev1l0rd" Vermeij. Original idea and Windows version by Rinnegatamante.</p>
+
+<p>This program uses utilities by The FFmpeg developers, the Independent JPEG Group, the FSF, Steveice10, dnasdw, profi200 and Rinnegatamante. With the exception of Rinnegatamante's jpgv converter, of which the source is included and compiled at runtime, no utilities are included in the source code.</p>
+
+<h2 id="COPYRIGHT">COPYRIGHT</h2>
+
+<p>The jpgv converter does not have any license attached to it, but the repository the original converter is in is under the GPL v3.0, so I'm assuming the jpgv converter is under the GPL v3.0 as well.</p>
+
+<p>The rest of the repository is under the following license:</p>
+
+<pre><code>vcc-linux Copyright (C) 2017 Valentijn "ev1l0rd" Vermeij
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+</code></pre>
+
+
+  <ol class='man-decor man-foot man foot'>
+    <li class='tl'>ev1l0rd</li>
+    <li class='tc'>May 2017</li>
+    <li class='tr'>vcc-linux(1)</li>
+  </ol>
+
+  </div>
+</body>
+</html>
