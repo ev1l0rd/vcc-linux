@@ -243,20 +243,24 @@ fi
 
 # We start with checking if the encoder is already compiled, and if not, we compile it. This is better because that way, it will always work, regardless of architecture.
 if [ ! -f "linuxstuffs/jpgv_encoder_2d" ]; then
-	exec linuxstuffs/vid2jpgvsauce/build.sh
+	echo "Compiling 2D encoder"
+	gcc -o "linuxstuffs/jpgv_encoder_2d" "linuxstuffs/vid2jpgvsauce/main_m.c"
+	echo "Finished"
 fi
 
 if [ ! -f "linuxstuffs/jpgv_encoder_3d" ]; then
-	exec linuxstuffs/vid2jpgvsauce/build.sh
+	echo "Compiling 3D encoder"
+	gcc -o "linuxstuffs/jpgv_encoder_3d" "linuxstuffs/vid2jpgvsauce/main_s.c"
+	echo "Finished"
 fi
 
 # Now to actually create the jpgv
 if [[ "1" == "$threedeevid" ]]; then
-	exec linuxstuffs/jpgv_encoder_3d "$quality"
+	"linuxstuffs/jpgv_encoder_3d" "$quality"
 fi
 
 if [[ "2" == "$threedeevid" ]]; then
-	exec linuxstuffs/jpgv_encoder_2d "$quality"
+	"linuxstuffs/jpgv_encoder_2d" "$quality"
 fi
 
 echo "Deleting temp files..."
