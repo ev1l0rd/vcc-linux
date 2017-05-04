@@ -30,4 +30,5 @@ before_script:
 script:
  - bash -c 'shellcheck build_full.sh'
  - bash -c 'shellcheck linuxstuffs/vid2jpgvsauce/build.sh'
+ - bash -c 'cd linuxstuffs/vid2jpgvsauce; ./build.sh'
  - bash -c './test.sh'

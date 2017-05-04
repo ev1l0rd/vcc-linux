@@ -11,6 +11,7 @@ Can also be called without arguments. Script will go interactive for any missing
 Run man ./docs/manpage or $(basename $0) -h for individual option coverage.
 
 EOF
+	exit 0
 }
 
 #getopts parsing
@@ -23,7 +24,8 @@ while getopts ":cfhd:tl:r:u:n:b:i:a:q:p:g:" opt; do
 		FORCED=1
 		;;
 	h)
-		man './docs/manpage'
+		man './docs/manpage.1'
+		exit 0
 		;;
 	d)
 		VIDFILESET=1
@@ -63,6 +65,9 @@ while getopts ":cfhd:tl:r:u:n:b:i:a:q:p:g:" opt; do
 		;;
 	g)
 		videoauthor=$OPTARG
+		;;
+	*)
+		usage
 		;;
 	esac
 done
