@@ -75,6 +75,13 @@ if [[ $framerate =~ ^[0-9]+$ ]]; then
 	exit 1
 fi
 
+if [[ -n $VIDFILESET ]]; then
+	if [[ -z $threedeeleft || -z $threedeeright ]]; then
+		echo "3D video flag given, but no left and/or right video specified. Exiting"
+		exit 1
+	fi
+fi
+
 if [ -z "$FORCED" ]; then
 # Command line checking. See http://stackoverflow.com/a/677212/4666756 for details.
 command -v ffmpeg >/dev/null 2>&1 || { echo -e "\e[1;31mFFMpeg is not installed or it is not added to your PATH."; echo -e "Install FFMpeg or add it to your PATH, then rerun this script.\e[0m"; exit 1; }
