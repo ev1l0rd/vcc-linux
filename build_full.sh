@@ -4,7 +4,7 @@
 function usage() {
 # shellcheck disable=SC2086
 cat <<EOF
-	Usage: $(basename $0) [-cf] [-d [FILE]| -t [-l FILE [-r FILE]]] [-u UNIQUEID] [-n TITLE] [-b BANNER] [-i ICON] [-a AUDIO] [-g AUTHOR] [-q QUALITY] [-f FRAMERATE] [-h]
+	Usage: $(basename $0) [-cf] [-d [FILE]| -t [-l FILE [-r FILE]]] [-u UNIQUEID] [-n TITLE] [-b BANNER] [-i ICON] [-a AUDIO] [-g AUTHOR] [-q QUALITY] [-p FRAMERATE] [-h]
 
 Can also be called without arguments. Script will go interactive for any missing arguments. All arguments are optional.
 
