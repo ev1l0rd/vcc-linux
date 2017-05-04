@@ -8,9 +8,11 @@ addons:
   sources:
    - trusty-media
    - debian-sid
+   - ubuntu-toolchain-r-test
   packages:
    - ffmpeg
    - shellcheck
+   - libstdc++6
 
 before_install:
  - ./.travis-libjpeg-setup.sh
