@@ -68,12 +68,12 @@ while getopts ":cfhd:tl:r:u:n:b:i:a:q:f:g:" opt; do
 done
 
 #Thank stackoverflow again. http://stackoverflow.com/a/2210386/4666756
-if [[ $quality =~ ^[0-9]+$ ]]; then
+if [[ ! $quality =~ ^[0-9]+$ ]]; then
 	echo "Quality is not a positive integer. Exiting"
 	exit 1
 fi
 
-if [[ $framerate =~ ^[0-9]+$ ]]; then
+if [[ ! $framerate =~ ^[0-9]+$ ]]; then
 	echo "Framerate is not a positive integer. Exiting"
 	exit 1
 fi
