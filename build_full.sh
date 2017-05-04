@@ -69,7 +69,6 @@ done
 
 #Thank stackoverflow again. http://stackoverflow.com/a/2210386/4666756
 if [[ -n $quality ]]; then
-
 	if [[ $quality =~ ^[0-9]+$ ]]; then
 		echo "Quality is a positive integer"
 	else
