@@ -261,11 +261,13 @@ fi
 
 # Now to actually create the jpgv
 if [[ "1" == "$threedeevid" ]]; then
-	"linuxstuffs/jpgv_encoder_3d" "$quality"
+	#shellcheck disable=SC2086
+	linuxstuffs/jpgv_encoder_3d $quality
 fi
 
 if [[ "2" == "$threedeevid" ]]; then
-	"linuxstuffs/jpgv_encoder_2d" "$quality"
+	#shellcheck disable=SC2086
+	linuxstuffs/jpgv_encoder_2d $quality
 fi
 
 echo "Deleting temp files..."
